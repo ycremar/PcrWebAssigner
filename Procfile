@@ -1,1 +1,1 @@
-web: gunicorn TrackingSystem.wsgi --log-file -
+web: gunicorn PcrWebAssigner.wsgi --log-file -
