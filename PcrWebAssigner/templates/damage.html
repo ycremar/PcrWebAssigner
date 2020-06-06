@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="w3-card">
+<header class="w3-container w3-theme w3-center w3-row">
+    <h2>{{ title }}</h2>   
+</header>
+
+<form method="post" id="damage_report_form">
+    {% csrf_token %}
+    <table class="w3-table w3-bordered w3-centered">
+        {% for field in form %}
+            <tr class="w3-hover-light-gray">
+                <th class="w3-padding-16">{{ field.label_tag }}</th><td>{{ field }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</form>
+</div>
+<div class="w3-cell-row w3-padding-16 w3-center">
+    <button form='damage_report_form' type="submit" class="w3-cell w3-button w3-theme-d5">Submit</button>
+</div>
+
+{% endblock %}

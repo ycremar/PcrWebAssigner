@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>a{TEXT-DECORATION:none}</style> 
+<header class="w3-container w3-theme w3-center w3-row w3-card">
+    <h2>公会成员 Guild Members</h2>   
+</header>
+
+<table class="w3-container w3-table w3-bordered w3-centered w3-card">
+    <tr class="w3-theme-l3">
+        <th style="width:20%"><a href="?order_by=first_name" >玩家名称</a></th>
+        <th style="width:10%"><a href="?order_by=profile__damage_counts" >今日出刀次数</a></th>
+        <th style="width:35%"><a href="?order_by=profile__total_damage_today" >今日伤害</a></th>
+        <th style="width:35%"><a href="?order_by=profile__accumulated_damage" >累计伤害</a></th>
+    </tr>
+    {% for member in members %}
+    <tr class=" w3-hover-light-gray">
+        <td class="w3-padding-16">{{ member.first_name }}</td>
+        <td class="w3-padding-16">{{ member.profile.damage_counts }}</td>
+        <td class="w3-padding-16">{{ member.profile.total_damage_today }}</td>
+        <td class="w3-padding-16">{{ member.profile.accumulated_damage }}</td>
+    </tr>
+    {% empty %}
+    <tr><th colspan="7">暂无公会成员记录。</th></tr>
+    {% endfor %}
+</table>
+{% endblock %}
