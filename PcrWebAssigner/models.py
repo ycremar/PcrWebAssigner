@@ -9,11 +9,15 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     total_damage_today = models.BigIntegerField(verbose_name='Total Damage Today', default=0)
     accumulated_damage = models.BigIntegerField(verbose_name='Accumulated Damage', default=0)
-    damage_counts = models.SmallIntegerField(blank = False, default=0, verbose_name='Damage Counts',\
-        validators=[MaxValueValidator(3), MinValueValidator(0)])
+    damage_counts = models.SmallIntegerField(blank = False, default=0, verbose_name='Damage Counts')
+    accumulated_counts = models.SmallIntegerField(blank = False, default=0, verbose_name='Accumulated Counts')
+    
+    finishing_counts = models.SmallIntegerField(blank = False, default=0, verbose_name='今日尾刀次数')
+    acc_finishing_counts = models.SmallIntegerField(blank = False, default=0, verbose_name='总计尾刀次数')
     # Status
     in_battle = models.BooleanField(default=False, verbose_name='挑战中')
     sos = models.BooleanField(default=False, verbose_name='挂树')
+    finishing = models.BooleanField(default=False, verbose_name='尾刀')
     
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -61,7 +65,7 @@ class Boss(models.Model):
     
 class RealDamage(models.Model):
     bonus = models.BooleanField(verbose_name='尾刀', default=False)
-    damage = models.IntegerField()
+    damage = models.IntegerField(validators=[MinValueValidator(0)], verbose_name='当前刀伤害')
     player = models.ForeignKey(User, related_name='player_rd', on_delete=models.CASCADE)
     boss = models.ForeignKey(Boss, related_name='boss_rd', on_delete=models.CASCADE)
     notes = models.CharField(max_length=511, blank=True, verbose_name='备注（e.g. 阵容）')

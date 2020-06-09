@@ -26,6 +26,8 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('simulation/', views.simulation, name='simulation'),
     path('damage/', views.report_damage, name='damage'),
+    path('damage/sos/', views.sos, name='sos'),
+    path('damage/cancel_battle/', views.cancel_battle, name='cancel_battle'),
     path('members/', views.members, name='members'),
     
     path('login/', auth_views.LoginView.as_view(), name='login'),

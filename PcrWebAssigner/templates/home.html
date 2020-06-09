@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<body>
   <div class="w3-ul w3-card w3-hoverable w3-margin">
     <div class="w3-container">
       <a href="{% url 'account' %}" class="w3-button w3-block w3-left-align">欢迎，骑士君 {{user.first_name}} (id: {{user.get_username}})。</a>
@@ -56,11 +56,14 @@
       {% endfor %}
     </div>  
   </div>
+
   <div class="w3-ul w3-card w3-hoverable w3-margin">
-    <table class="w3-container w3-table w3-bordered w3-centered w3-card">
-      <header class="w3-container w3-light-grey">
-        <h5>战斗中玩家列表</h5>
-      </header>
+    <header class="w3-container w3-light-grey">
+      <h5>正在挑战的玩家列表</h5>
+    </header>
+      
+    {% if battle|length > 0 %}
+    <table class="w3-container w3-table w3-centered w3-card">
       <tr class="w3-theme-l3">
         <th style="width:20%">玩家名称</th>
         <th style="width:10%">今日出刀次数</th>
@@ -74,30 +77,76 @@
           <td class="w3-padding-16">{{ user.profile.total_damage_today }}</td>
           <td class="w3-padding-16">{{ user.profile.accumulated_damage }}</td>
       </tr>
-      {% empty %}
-      <div class="w3-container w3-margin">
-        <tr><th colspan="7">暂无处于战斗中的玩家。</th></tr>
-        <div class="w3-container w3-margin"> </div>
-      </div>
       {% endfor %}
     </table>
+    {% else %}
+    <div class="w3-container w3-margin">
+      <tr><th colspan="7">暂无处于战斗中的玩家。</th></tr>
+      <div class="w3-container w3-margin"> </div>
+    </div>
+    {% endif %}
   </div>
   
   <div class="w3-ul w3-card w3-hoverable w3-margin">
     <header class="w3-container w3-light-grey">
       <h5>挂树玩家列表</h5>
     </header>
-    {% for user in sos %}
-    <tr class=" w3-hover-light-gray w3-margin">
-        <td class="w3-padding-16 w3-margin">{{ user.first_name }}</td>
-    </tr>
-    {% empty %}
+      
+    {% if sos|length > 0 %}
+    <table class="w3-container w3-table w3-centered w3-card">
+      <tr class="w3-theme-l3">
+        <th style="width:20%">玩家名称</th>
+        <th style="width:10%">今日出刀次数</th>
+        <th style="width:35%">今日伤害</th>
+        <th style="width:35%">累计伤害</th>
+      </tr>
+      {% for user in sos %}
+      <tr class=" w3-hover-light-gray w3-margin">
+          <td class="w3-padding-16 w3-margin">{{ user.first_name }}</td>
+          <td class="w3-padding-16">{{ user.profile.damage_counts }}</td>
+          <td class="w3-padding-16">{{ user.profile.total_damage_today }}</td>
+          <td class="w3-padding-16">{{ user.profile.accumulated_damage }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
     <div class="w3-container w3-margin">
-      <tr><th colspan="7">暂无挂树玩家。</th></tr>
+      <tr><th colspan="7">暂无挂树的玩家。</th></tr>
       <div class="w3-container w3-margin"> </div>
     </div>
-    {% endfor %}
+    {% endif %}
   </div>
+  
+  <div class="w3-ul w3-card w3-hoverable w3-margin">
+    <header class="w3-container w3-light-grey">
+      <h5>当前Boss已出刀列表</h5>
+    </header>
+      
+    {% if damages|length > 0 %}
+    <table class="w3-container w3-table w3-centered w3-card">
+      <tr class="w3-theme-l3">
+        <th style="width:20%">玩家名称</th>
+        <th style="width:10%">今日已出刀数</th>
+        <th style="width:35%">出刀伤害</th>
+        <th style="width:35%">队伍备注</th>
+      </tr>
+      {% for damage in damages %}
+      <tr class=" w3-hover-light-gray w3-margin">
+          <td class="w3-padding-16 w3-margin">{{ damage.player.first_name }}</td>
+          <td class="w3-padding-16">{{ damage.player.profile.damage_counts }}</td>
+          <td class="w3-padding-16">{{ damage.damage }}</td>
+          <td class="w3-padding-16">{{ damage.notes }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <div class="w3-container w3-margin">
+      <tr><th colspan="7">暂无出刀记录。</th></tr>
+      <div class="w3-container w3-margin"> </div>
+    </div>
+    {% endif %}
+  </div>
+</body>
   
 
 {% endblock %}

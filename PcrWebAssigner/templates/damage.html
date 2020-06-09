@@ -19,7 +19,13 @@
 </form>
 </div>
 <div class="w3-cell-row w3-padding-16 w3-center">
-    <button form='damage_report_form' type="submit" class="w3-cell w3-button w3-theme-d5">Submit</button>
+    <button form='damage_report_form' type="submit" class="w3-cell w3-button w3-theme-d5">结束并提交伤害</button>
+    {% if player.profile.sos %}
+    <a href="sos"><button class="w3-button w3-light-grey w3-margin">结束挂树</button></a>
+    {% else %}
+    <a href="sos"><button class="w3-button w3-light-grey w3-margin">Oops!挂树</button></a>
+    {% endif %}
+    <a href="cancel_battle"><button class="w3-button w3-light-grey w3-margin">返回</button></a>
 </div>
 
 {% endblock %}
