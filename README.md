@@ -1,6 +1,6 @@
 # PcrWebAssigner 公主连结出刀统计/排刀优化的Web App
 
-Python/Django开发，目前已完成Yobot的主要功能，作为独立于qq的Web App。
+Python/Django开发，目前已完成Yobot的主要功能，作为独立于qq的Web App。参与开发请联系q: 951806257。
 
 
 #### 项目进度
